@@ -9,7 +9,7 @@ while(user == ''){
 }
 
 
-alert('Bienvenidio/a '+user);
+alert('Bienvenido/a '+user);
 
 // Definicion de variables.
 let aportes=0;
@@ -39,7 +39,7 @@ while(opcion!=4){
         case 1: 
             
             monto=parseFloat(prompt('Ingrse el monto a aportar:'));
-            aportes+=monto; // Sumo el nuevo aporte dado.
+            aportes+=monto; // Sumo el nuevo aporte.
             agregarAlHistorial(monto); // Agrego nuevo monto a la lista de aportes.
             alert('Aporte realizado!.');
             break;
