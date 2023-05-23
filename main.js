@@ -41,7 +41,10 @@ while(opcion!=4){
             monto=parseFloat(prompt('Ingrse el monto a aportar:'));
             aportes+=monto; // Sumo el nuevo aporte.
             agregarAlHistorial(monto); // Agrego nuevo monto a la lista de aportes.
-            alert('Aporte realizado!.');
+            if(monto>10000){
+                alert('Wow muchas gracias por un aporte tan grande, en serio gracias.');
+            }else{
+            alert('Aporte realizado!.');}
             break;
         case 2:
             alert('La suma de aportes hasta la fecha es:\n'+'$'+aportes+'.');
