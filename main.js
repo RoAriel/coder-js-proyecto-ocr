@@ -39,14 +39,15 @@ while (opcion != 4) {
         case 1:
 
             monto = parseFloat(prompt('Ingrse el monto a aportar:'));
-            if(isNaN(monto)){
+            if (isNaN(monto)) {
                 alert('Ingrese valor valido'); // si no es valido el input vuelve al menu raiz
                 break;
-            }else{
-            aportes += monto; // Sumo el nuevo aporte.
-            agregarAlHistorial(monto); // Agrego nuevo monto a la lista de aportes.
-            console.log(histDeAportes);
-            break;}
+            } else {
+                aportes += monto; // Sumo el nuevo aporte.
+                agregarAlHistorial(monto); // Agrego nuevo monto a la lista de aportes.
+                console.log(histDeAportes);
+                break;
+            }
         case 2:
             alert('La suma de aportes hasta la fecha es:\n' + '$' + aportes + '.');
             break;
