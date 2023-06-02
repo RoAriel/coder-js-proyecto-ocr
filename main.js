@@ -1,3 +1,31 @@
+// Primeras Clases
+
+class Aporte{
+
+    constructor(monto){
+        this.fecha = new Date();
+        this.monto = monto;
+    };
+
+    getMonto(){
+        return this.monto;
+    };
+
+    getFechaFormateada(){
+        let mes = this.fecha.getMonth()+1
+        return this.fecha.getDate()+'-'+mes+'-'+this.fecha.getFullYear();
+    };
+};
+class Usuario{
+
+    constructor(id,nombre,apellido){
+        thid.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.aportes = [];
+    };
+};
+
 // Ingreso del usuario.
 
 let user = (prompt('Ingrese usuario:')).trim();
