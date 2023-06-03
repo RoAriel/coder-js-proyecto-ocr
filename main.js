@@ -1,43 +1,53 @@
-// Primeras Clases
+// Primeras clases
 
-class Aporte{
+class Aporte {
 
-    constructor(monto){
-        this.fecha = new Date();
+    constructor(idUsr, monto) {
+        this.idUsr = idUsr;
         this.monto = monto;
+        this.fecha = new Date();
     };
 
-    getMonto(){
-        return this.monto;
-    };
-
-    getFechaFormateada(){
-        let mes = this.fecha.getMonth()+1
-        return this.fecha.getDate()+'-'+mes+'-'+this.fecha.getFullYear();
+    getFechaFormateada() {
+        let mes = this.fecha.getMonth() + 1
+        return this.fecha.getDate() + '-' + mes + '-' + this.fecha.getFullYear();
     };
 };
-class Usuario{
+class Usuario {
 
-    constructor(id,nombre,apellido){
-        thid.id = id;
+    constructor(id, nombre) {
+        this.id = id;
         this.nombre = nombre;
-        this.apellido = apellido;
         this.aportes = [];
     };
+
+    aportar(aporte) {
+        this.aportes.push(aporte);
+    };
 };
+
+const usr1 = new Usuario(1, 'usr1');
+const usr2 = new Usuario(2, 'usr2');
+const usr3 = new Usuario(3, 'usr3');
+const usr4 = new Usuario(4, 'usr4');
+
+const usuarios = [usr1, usr2, usr3, usr4];
 
 // Ingreso del usuario.
 
-let user = (prompt('Ingrese usuario:')).trim();
+let input = prompt('Ingrese usuario:');
+let user = usuarios.find(usr => usr.nombre === input.trim());
 
-while (user == '') {
-
+while (user == undefined) {
+    console.log('el usr: ' + user);
     alert('Ingrese un usuario valido, por favor.');
-    user = (prompt('Ingrese usuario:')).trim();
-}
 
+    input = prompt('Ingrese usuario:');
+    user = usuarios.find(usr => usr.nombre === input.trim());
+};
 
-alert('Bienvenido/a ' + user);
+alert('Bienvenido/a ' + user.nombre);
+
 
 // Definicion de variables.
 let aportes = 0;
