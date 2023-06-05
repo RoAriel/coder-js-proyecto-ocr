@@ -49,16 +49,19 @@ class Usuario {
 
         return histDeAportes;
     };
+
 };
 
-const usr1 = new Usuario(1, 'Pepe');
-const usr2 = new Usuario(2, 'Juan');
-const usr3 = new Usuario(3, 'Lola');
-const usr4 = new Usuario(4, 'Mari');
+function usersMostrarIdNombreEnLista(users){
+    let lista = '';
 
-const usuarios = [usr1, usr2, usr3, usr4];
+    for(let usr of users){
+        lista+='ID: '+usr.id+ '  Nombre: '+usr.nombre+'\n';
+    };
 
-// Ingreso del usuario.
+    return lista;
+};
+
 function ingreseUsuario(entrada) {
 
     let user = usuarios.find(usr => usr.nombre === entrada.trim());
@@ -115,8 +118,7 @@ function accionesDeUser(usuario){
             '1. Ingresar un nuevo aporte.\n' +
             '2. Ver total de sus aportes.\n' +
             '3. Ver historial de aportes. \n' +
-            '4. Cambiar de Usuario. \n' +
-            '5. Salir.'
+            '4. Salir.'
         ));
     };
 };
@@ -130,10 +132,10 @@ function accionesDeAdmin(){
         '2. Ver todos los usuarios. \n' +
         '3. Ver usuarios que Aportaron. \n'+
         '4. Ver usuarios que No Aportaron. \n'+
-        '5. Salir.'
-    ));
+        '5. Total de Aportes. \n'+
+        '6. Salir.'));  
 
-    while(opcion != 5){
+    while(opcion != 6){
         switch (opcion) { //Condicional donde evaluo las opciones del usuario
             case 1:
                 let ids = usuarios.map(usr => usr.id);
@@ -142,17 +144,17 @@ function accionesDeAdmin(){
                 break;
             
             case 2:
-                alert('Usuarios ccargados en el sitema: \n'+usuarios.map(usr => usr.nombre));
+                alert('Usuarios cargados en el sitema: \n'+usuarios.map(usr => usr.nombre));
                 break;
 
             case 3:
                 let aportaron = usuarios.filter(usr => usr.aportes.length > 0)
-                alert('Usuarios que aportaron: \n'+aportaron.map(usr => usr.name));
+                alert('Usuarios que aportaron: \n'+usersMostrarIdNombreEnLista(aportaron));
                 break;
             
             case 4:
                 let noAportaron = usuarios.filter(usr => usr.aportes.length == 0)
-                alert('Usuarios que NO portaron: \n'+noAportaron.map(usr => usr.name));
+                alert('Usuarios que NO portaron: \n'+ usersMostrarIdNombreEnLista(noAportaron));
                 break;
 
             case 5:
@@ -175,23 +177,50 @@ function accionesDeAdmin(){
             '2. Ver todos los usuarios. \n' +
             '3. Ver usuarios que Aportaron. \n'+
             '4. Ver usuarios que No Aportaron. \n'+
-            '5, Total de Aportes. \n'+
-            '6 Salir.'));  
+            '5. Total de Aportes. \n'+
+            '6. Salir.'));  
     };
 
+};
+
+
+// Inicializo el entorno
+
+const usr1 = new Usuario(1, 'Pepe');
+const usr2 = new Usuario(2, 'Juan');
+const usr3 = new Usuario(3, 'Lola');
+const usr4 = new Usuario(4, 'Mari');
+const admin = new Usuario(0,'admin');
+
+const usuarios = [admin,usr1, usr2, usr3, usr4];
+
+// Ingreso del usuario
+let userIngresado;
+
+let opcionInicial = prompt('Hola! \n'+ 'Quien eres?\n'+
+                            '1. Admin.\n'+
+                            '2. User.\n'+
+                            '3. Salir.');
+
+while (opcionInicial != '3') {
+    if (opcionInicial === '1') {
+        userIngresado = ingreseUsuario(prompt('Ingrese usuario de admin: '));
+        alert('Bienvenido/a ' + userIngresado.nombre);
+        accionesDeAdmin();
+    } else {
+        userIngresado = ingreseUsuario(prompt('Ingrese usuario: '));
+        alert('Bienvenido/a ' + userIngresado.nombre);
+        accionesDeUser(userIngresado);
     };
 
+    opcionInicial = prompt('Hola! \n'+ 'Quien eres?\n'+
+                            '1. Admin.\n'+
+                            '2. User.\n'+
+                            '3. Salir.');
+};
+                        
 
-let userIngresado = ingreseUsuario(prompt('Ingrese usuario: '));
 
-alert('Bienvenido/a ' + userIngresado.nombre);
-
-if (userIngresado.nombre ==='admin'){
-
-    accionesDeAdmin();
-}else{
-    accionesDeUser(userIngresado);
-}
 
 
 
