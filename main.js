@@ -64,7 +64,6 @@ function ingreseUsuario(entrada) {
     let user = usuarios.find(usr => usr.nombre === entrada.trim());
 
     while (user == undefined) {
-        console.log('el usr: ' + user);
         alert('Usuario incorrecto o no existente. Favor vuelva a intentar.');
         let entrada2 = prompt('Ingrese usuario:');
         user = usuarios.find(usr => usr.nombre === entrada2.trim());
@@ -73,61 +72,146 @@ function ingreseUsuario(entrada) {
     return user;
 };
 
+function accionesDeUser(usuario){
 
-let userIngresado = ingreseUsuario(prompt('Ingrese usuario: '));
-
-
-alert('Bienvenido/a ' + userIngresado.nombre);
-
-// Menu de interacccion
-let opcion = parseInt(prompt(
-    'Admin Sistema de aportes solidarios. Usted quiere:\n' +
-    '1. Ver total Todos los aportes.\n' +
-    '2. Buscar quien aporto mas. \n' +
-    '3. Buscar quien no aporto. \n' +
-    '4. Agregar usuario. \n' +
-    '6. Eliminar usuario. \n' +
-    '5. Salir.'
-
-));
-
-// Ciclo de inteaccion con el usuario
-while (opcion != 5) {
-
-    switch (opcion) { //Condicional donde evaluo las opciones del usuario
-        case 1:
-            monto = parseFloat(prompt('Ingrse el monto a aportar:'));
-            if (isNaN(monto)) {
-                alert('Ingrese valor valido'); // si no es valido el input vuelve al menu raiz
-                break;
-            } else {
-                userIngresado.aportes.push(new Aporte(userIngresado.id, monto));
-                break;
-            }
-        case 2:
-            alert('La suma de aportes hasta la fecha es:\n' + '$' + userIngresado.aportesTotales() + '.');
-            console.log(userIngresado)
-            break;
-        case 3:
-            alert('Sus aportes fueron:\n' + userIngresado.historialDeAportes());
-            break;
-
-        case 4:
-            userIngresado = ingreseUsuario(prompt('Ingrese usuario:'));
-            console.log(userIngresado);
-            break;
-        default:
-
-            alert('Opcion no valida');
-            break;
-    }
-
-    opcion = parseInt(prompt(
-        userIngresado.nombre + ' usted quiere:\n' +
+    // Menu de interacccion
+    let opcion = parseInt(prompt(
+        'Usted quiere:\n' +
         '1. Ingresar un nuevo aporte.\n' +
         '2. Ver total de sus aportes.\n' +
         '3. Ver historial de aportes. \n' +
-        '4. Cambiar de Usuario. \n' +
+        '4. Salir.'
+
+    ));
+
+    // Ciclo de inteaccion con el usuario
+    while (opcion != 4) {
+
+        switch (opcion) { //Condicional donde evaluo las opciones del usuario
+            case 1:
+                monto = parseFloat(prompt('Ingrse el monto a aportar:'));
+                if (isNaN(monto)) {
+                    alert('Ingrese valor valido'); // si no es valido el input vuelve al menu raiz
+                    break;
+                } else {
+                    usuario.aportes.push(new Aporte(usuario.id, monto));
+                    break;
+                };
+            case 2:
+                alert('La suma de aportes hasta la fecha es:\n' + '$' + usuario.aportesTotales() + '.');
+                break;
+            case 3:
+                alert('Sus aportes fueron:\n' + usuario.historialDeAportes());
+                break;
+
+            default:
+
+                alert('Opcion no valida');
+                break;
+            };
+
+        opcion = parseInt(prompt(
+            usuario.nombre + ' usted quiere:\n' +
+            '1. Ingresar un nuevo aporte.\n' +
+            '2. Ver total de sus aportes.\n' +
+            '3. Ver historial de aportes. \n' +
+            '4. Cambiar de Usuario. \n' +
+            '5. Salir.'
+        ));
+    };
+};
+
+function accionesDeAdmin(){
+
+    // Menu de interacccion
+    let opcion = parseInt(prompt(
+        'Admin usted quiere:\n' +
+        '1. Igregar usuario nuevo.\n' +
+        '2. Ver todos los usuarios. \n' +
+        '3. Ver usuarios que Aportaron. \n'+
+        '4. Ver usuarios que No Aportaron. \n'+
         '5. Salir.'
     ));
-};
+
+    while(opcion != 5){
+        switch (opcion) { //Condicional donde evaluo las opciones del usuario
+            case 1:
+                let ids = usuarios.map(usr => usr.id);
+                let maxId = Math.max(...ids);
+                usuarios.push(new Usuario(maxId+1,prompt('Nombre para nuevo usuario:')));
+                break;
+            
+            case 2:
+                alert('Usuarios ccargados en el sitema: \n'+usuarios.map(usr => usr.nombre));
+                break;
+
+            case 3:
+                let aportaron = usuarios.filter(usr => usr.aportes.length > 0)
+                alert('Usuarios que aportaron: \n'+aportaron.map(usr => usr.name));
+                break;
+            
+            case 4:
+                let noAportaron = usuarios.filter(usr => usr.aportes.length == 0)
+                alert('Usuarios que NO portaron: \n'+noAportaron.map(usr => usr.name));
+                break;
+
+            case 5:
+                let totalAportado = 0;
+                for (let usr of usuarios){
+                    totalAportado+=usr.aportesTotales();
+                }
+                alert('Total recaudado entre todos los usuarios: \n'+
+                '$ '+totalAportado);
+                break;
+
+            default:
+
+                alert('Opcion no valida');
+                break;
+        };
+        opcion = parseInt(prompt(
+            'Admin usted quiere:\n' +
+            '1. Igregar usuario nuevo.\n' +
+            '2. Ver todos los usuarios. \n' +
+            '3. Ver usuarios que Aportaron. \n'+
+            '4. Ver usuarios que No Aportaron. \n'+
+            '5, Total de Aportes. \n'+
+            '6 Salir.'));  
+    };
+
+    };
+
+
+let userIngresado = ingreseUsuario(prompt('Ingrese usuario: '));
+
+alert('Bienvenido/a ' + userIngresado.nombre);
+
+if (userIngresado.nombre ==='admin'){
+
+    accionesDeAdmin();
+}else{
+    accionesDeUser(userIngresado);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // case 4:
+        //     userIngresado = ingreseUsuario(prompt('Ingrese usuario:'));
+        //     console.log(userIngresado);
+        //     break;
