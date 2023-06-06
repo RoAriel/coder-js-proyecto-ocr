@@ -1,0 +1,16 @@
+{
+  "name": "coder-js-proyecto-ocr",
+  "version": "1.0.0",
+  "description": "Proyecto para el curso de [**JavaScript**](https://www.coderhouse.com/collections/categoria-programacion-y-desarrollo/products/javascript) de [**Coderhouse**](https://www.coderhouse.com/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2"
+  }
+}
