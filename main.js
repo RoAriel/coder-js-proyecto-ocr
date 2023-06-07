@@ -8,8 +8,8 @@ class Aporte {
     };
 
     getFechaFormateada() {
-        let mes = this.fecha.getMonth() + 1
-        return this.fecha.getDate() + '/' + mes + '/' + this.fecha.getFullYear();
+        
+        return this.fecha.toLocaleDateString();
     };
 };
 
