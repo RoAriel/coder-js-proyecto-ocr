@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,73 +8,103 @@
     <title>Proyecto-OCR</title>
     <link rel="stylesheet" href="./css/tailwind.css">
 </head>
-<body>
-    <header>
-        <div class="text-2xl text-zinc-100 py-2 m-3 bg-orange-400 flex items-center justify-center ">
+
+<body class="my-bg-img">
+    <nav>
+        <div>
+            <ul class="p-3 flex gap-3 items-center justify-end">
+                <li><a href="#"></a>Historial</li>
+                <li><a href="#"></a>Totales</li>
+                <li><a href="#"></a>Exportar</li>
+            </ul>
+        </div>
+    </nav>
+    <header class="p-3">
+        <div class="text-2xl text-zinc-100 bg-[#F1592B] flex items-center justify-center p-3 rounded-lg ">
             <h1>Control de Aportes</h1>
         </div>
     </header>
     <main>
-        <div class="m-3">
-                <table class="w-3/4 text-sm text-left text-gray-500 dark:text-neutral-950">
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Usuario</th>
-                        <th>Aporte</th>
-                        <th>Fecha</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>0</td>
-                        <td>admin</td>
-                        <td>$ -----</td>
-                        <td>01/01/1900</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Pepe</td>
-                        <td>$ -----</td>
-                        <td>01/01/1900</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Juan</td>
-                        <td>$ -----</td>
-                        <td>01/01/1900</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Lola</td>
-                        <td>$ -----</td>
-                        <td>01/01/1900</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Mari</td>
-                        <td>$ -----</td>
-                        <td>01/01/1900</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- TABLA -->
+        <div class="flex flex-col p-3">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-left text-sm font-light bg-fuchsia-50 ">
+                            <thead class="border-b font-medium dark:border-neutral-500">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">#ID</th>
+                                    <th scope="col" class="px-6 py-4">Nombre</th>
+                                    <th scope="col" class="px-6 py-4">Último aporte</th>
+                                    <th scope="col" class="px-6 py-4">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b dark:border-neutral-500">
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
+                                    <td class="whitespace-nowrap px-6 py-4">Mark</td>
+                                    <td class="whitespace-nowrap px-6 py-4">Otto</td>
+                                    <td class="whitespace-nowrap px-6 py-4">@mdo</td>
+                                </tr>
+                                <tr class="border-b dark:border-neutral-500">
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">2</td>
+                                    <td class="whitespace-nowrap px-6 py-4">Jacob</td>
+                                    <td class="whitespace-nowrap px-6 py-4">Thornton</td>
+                                    <td class="whitespace-nowrap px-6 py-4">@fat</td>
+                                </tr>
+                                <tr class="border-b dark:border-neutral-500">
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium">3</td>
+                                    <td class="whitespace-nowrap px-6 py-4">Larry</td>
+                                    <td class="whitespace-nowrap px-6 py-4">Wild</td>
+                                    <td class="whitespace-nowrap px-6 py-4">@twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="m-3">
-            <h2 class="text-xl underline ">Los users para pruebas son:</h2>
-            <ul class="text-lg text-cyan-700 ml-5 list-disc ">
-                <li>admin (opciones especiales)</li>
-                <li>Pepe</li>
-                <li>Juan</li>
-                <li>Lola</li>
-                <li>Mari</li>
-            </ul>
-            <h3 class="font-bold text-base">*Fuera de estos users no se podra acceder al menú principal</h3>
-        </div>
+        <!-- TABLA -->
+
+        <section>
+            <div class="p-3 text-2xl">
+                <h2>Nuevo Aporte</h2>
+                <div class="py-2 flex items-center justify-items-start gap-3">
+                    <div>
+                        <label for="countries"
+                            class="block mb-2 text-sm font-medium text-gray-900 ">Seleccione un Usuario</label>
+                        <select id="countries"
+                            class=" text-black text-xs rounded-lg block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black">
+                            <option selected>Choose a country</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="monto"
+                            class="block mb-2 text-sm font-medium text-gray-900">Monto a Aportar</label>
+                        <input type="number" id="monto"
+                            class="block w-full p-2.5 text-black border rounded-lg  sm:text-xs focus:ring-[#F1592B] focus:border-[#F1592B] dark:bg-white dark:border-gray-600 dark:placeholder-gray-400">
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Haga click para Aportar</label>
+                        <button
+                            class="bg-[#ffa958] hover:bg-[#F1592B] text-white font-medium p-1 rounded border border-teal-50 mt-1">
+                            Aportar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
     </main>
     <footer>
 
     </footer>
 
-   <!-- <script src="../js/main.js"></script> -->
+    <!-- <script src="../js/main.js"></script> -->
 </body>
+
 </html>
