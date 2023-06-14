@@ -218,29 +218,3 @@ while (opcionInicial != '3') {
                             '2. User.\n'+
                             '3. Salir.');
 };
-                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // case 4:
-        //     userIngresado = ingreseUsuario(prompt('Ingrese usuario:'));
-        //     console.log(userIngresado);
-        //     break;
