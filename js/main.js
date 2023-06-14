@@ -99,5 +99,40 @@ function renderizarUsuarios(users){
     };
 };
 
+let usuarioIngresado = document.getElementById('usuario');
+let montoIngresado = document.getElementById('monto');
+
+// Evento click
+let botonAportar = document.getElementById('botonAportar');
+
+botonAportar.addEventListener('click',()=>{
+
+    let usr = usuarios.find(usr => usr.nombre.toLowerCase() == usuarioIngresado.value.toLowerCase());
+    usr.aportar(parseFloat(montoIngresado.value));
+    console.table(usuarios.find(usr => usr.nombre=='Pepe'));
+    renderizarUsuarios(usuarios);
+    
+});
 
 renderizarUsuarios(usuarios);
+
+// Validacion de Inputs
+function validar(ev){
+    if((usuarioIngresado.value=='')||!(existeUsuarioEnListaDeUsuarios(usuarioIngresado.value,usuarios))){
+        ev.preventDefault();
+        alert('Ingrese Usuario Valido !');
+    };
+    
+    if(parseFloat(montoIngresado.value) <= 0) {
+        ev.preventDefault();
+        alert('El monto tiene que ser mayor a 0!');
+    };
+
+    if((usuarioIngresado.value=='')||(montoIngresado.value=='')){
+        ev.preventDefault();
+        alert('Complete ambos campos por favor.');
+    };
+};
+
+let formularioUser = document.getElementById('formulario');
+formulario.addEventListener('submit', validar);
