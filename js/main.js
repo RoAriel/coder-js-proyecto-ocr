@@ -13,9 +13,10 @@ class Aporte {
 
 class Usuario {
 
-    constructor(id, nombre) {
+    constructor(id, nombre, apellido) {
         this.id = id;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.aportes = [];
     };
 
@@ -47,90 +48,108 @@ class Usuario {
     };
 
     montoDelUtimoAporte() {
-        let monto = this.aportes[this.aportes.length - 1].monto;
-        return monto;
+        if (this.aportes.length == 0) {
+            return 0;
+        } else {
+            let monto = this.aportes[this.aportes.length - 1].monto
+            return monto;
+        }
     };
 
     fechaDelUtimoAporte() {
-        let fecha = this.aportes[this.aportes.length - 1].getFechaFormateada();
-        return fecha;
+        if (this.aportes.length == 0) {
+            return '--/--/----';
+        } else {
+            let fecha = this.aportes[this.aportes.length - 1].getFechaFormateada();
+            return fecha;
+        }
     };
 
 };
 
-function existeUsuarioEnListaDeUsuarios(nombreDeUsuario, usuarios) {
-    let nombresDeLosUsuarios = usuarios.map(usr => usr.nombre.toLowerCase());
-    let nombre = nombreDeUsuario.toLowerCase();
-    return nombresDeLosUsuarios.includes(nombre);
-};
-
-const usr1 = new Usuario(1, 'Pepe');
-const usr2 = new Usuario(2, 'Juan');
-const usr3 = new Usuario(3, 'Lola');
-const usr4 = new Usuario(4, 'Mari');
+const usr1 = new Usuario(1, 'Pepe', 'Mujica');
+const usr2 = new Usuario(2, 'Pepe', 'Lozo');
+const usr3 = new Usuario(3, 'Juan', 'Loto');
+const usr4 = new Usuario(4, 'Lola', 'Indigo');
+const usr5 = new Usuario(5, 'Lola', 'Miranda');
+const usr6 = new Usuario(6, 'Mari', 'Gonzalez');
 //const admin = new Usuario(0,'admin');
 
 usr1.aportar(123);
-usr1.aportar(100);
-usr2.aportar(1435);
+usr2.aportar(143);
 usr3.aportar(156);
 usr4.aportar(700);
+usr5.aportar(100);
 
-const usuarios = [usr1, usr2, usr3, usr4];
+const usuarios = [usr1, usr2, usr3, usr4, usr5, usr6];
+
+// VARIABLES GLOBALES
+
+let usrValido = false;
+let montoValido = false;
+let idUsuarios = usuarios.map(usr => usr.id);
+let nombresDeUsuarios = usuarios.map(usr => usr.nombre);
+let table = document.getElementById('tablaBody');
+let usrIngresado = document.getElementById('name-usr');
+let montoIngresado = document.getElementById('in-monto');
+let idIngresado = document.getElementById('id-user');
 
 // FUNCIONES DE RECORRIDO Y USO DE CLASES
 
 function existeUserDeNombre(usrNombre) {
-    const nombresDeUsuarios = usuarios.map(usr => usr.nombre);
-
     return (nombresDeUsuarios.includes(usrNombre));
 };
 
-function getUserByName(usrName){
+function existeId(usrID) {
+    return (idUsuarios.includes(usrID));
+};
+
+function getUserByName(usrName) {
     return usuarios.find(usr => usr.nombre == usrName);
 };
 
+function getUserByID(idUsr) {
+    return usuarios.find(usr => usr.id == idUsr);
+};
+
 // USO DEL DOM
-let table = document.getElementById('tablaBody');
 
 function renderizarUsuarios(users) {
-
     table.innerHTML = '';
     for (const usr of users) {
         table.innerHTML += `
-        <tr>
-             <td>${usr.id}</td>
-             <td>${usr.nombre}</td>
-             <td>${usr.montoDelUtimoAporte()}</td>
-             <td>${usr.fechaDelUtimoAporte()}</td>
-        </tr>
-        `;
+         <tr>
+              <td>${usr.id}</td>
+              <td>${usr.nombre}</td>
+              <td>$ ${usr.montoDelUtimoAporte()}</td>
+              <td>${usr.fechaDelUtimoAporte()}</td>
+         </tr>
+         `;
     };
 };
 renderizarUsuarios(usuarios);
 
-// Validar Input Usuario.
-let usrValido= false;
-let usrIngresado = document.getElementById('in-user');
-usrIngresado.onkeyup = () => {
-    if (!existeUserDeNombre(usrIngresado.value)) {
-        usrIngresado.style.color = 'red';
+// Validar Input ID.
+let paseID = parseInt(idIngresado.value);
 
+idIngresado.onkeyup = () => {
+let paseID = parseInt(idIngresado.value);
+    if (!existeId(paseID)) {
+        idIngresado.style.color = 'red';
     } else {
-        usrIngresado.style.color = 'green';
-        usrValido= true
+        idIngresado.style.color = 'green';
+        usrValido = true
     };
 };
 
 // Validar Input Monto.
-let montoValido= false;
-let montoIngresado = document.getElementById('in-monto');
+
 montoIngresado.onkeyup = () => {
     if (parseFloat(montoIngresado.value) <= 0) {
         document.getElementById('bt-aportar').disabled = true;
     } else {
         document.getElementById('bt-aportar').disabled = false;
-        montoValido= true;
+        montoValido = true;
     };
 };
 
@@ -138,19 +157,17 @@ montoIngresado.onkeyup = () => {
 let botonAportar = document.getElementById('bt-aportar');
 botonAportar.addEventListener('click',()=>{
     if(usrValido && montoValido){
-        getUserByName(usrIngresado.value).aportar(parseFloat(montoIngresado.value));
-        console.log(getUserByName(usrIngresado.value).historialDeAportes())
+        getUserByID(paseID).aportar(parseFloat(montoIngresado.value));
         renderizarUsuarios(usuarios);
 
-        // Reset inputs
-        usrIngresado.value = '';
-        montoIngresado.value = '';
+         // Reset inputs
+         idIngresado.value = '';
+         montoIngresado.value = '';
 
-        // reset de las variables  XValido
-        usrValido =  false;
-        montoValido =  false;
-
-    }else{
-        alert('Usuario o Monto incorrecto, valide por favor');
-    }
-})
+         // reset de las variables  XValido
+         usrValido =  false;
+         montoValido =  false;
+     }else{
+         alert('ID o Monto incorrecto, valide por favor');
+     }
+ })
