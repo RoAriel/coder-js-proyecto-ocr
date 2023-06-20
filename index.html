@@ -23,7 +23,7 @@
     </div>
     </header>
     <main>
-        <div>
+        <section>
             <table>
                 <thead>
                     <tr>
@@ -37,7 +37,19 @@
 
                 </tbody>
             </table>
-        </div>
+        </section>
+        <section>
+            <h2>Nuevo aporte</h2>
+            <div>
+                <label for="usuario">
+                    Nombre <input type="text" placeholder="Usuario" id="in-user">
+                </label>
+                <label for="monto">
+                   $ <input type="number" placeholder="Monto" id="in-monto">
+                </label>
+                <button type="button" id="bt-aportar">Aportar</button>
+            </div>
+        </section>
     </main>
 
     <script src="./js/main.js"></script>
