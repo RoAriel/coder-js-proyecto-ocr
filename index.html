@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Proyecto-OCR</title>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
+
 <body>
     <nav>
         <div>
@@ -19,8 +21,8 @@
     </nav>
     <header>
         <div>
-        <h1>Control de Aportes</h1>
-    </div>
+            <h1>Control de Aportes</h1>
+        </div>
     </header>
     <main>
         <section>
@@ -29,6 +31,7 @@
                     <tr>
                         <th>#ID</th>
                         <th>Nombre</th>
+                        <th>Apellido</th>
                         <th>Monto</th>
                         <th>Fecha Ult Aporte</th>
                     </tr>
@@ -44,7 +47,24 @@
                 <label for="name-usuario">
                     Nombre <input type="text" placeholder="Nombre usuario" id="name-usr">
                 </label>
+                <label for="apellido-usuario">
+                    Apellido <input type="text" placeholder="Apellido usuario" id="lastName-usr">
+                </label>
                 <button type="button" id="bt-buscar-usr">Buscar</button>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultadosBody">
+
+                    </tbody>
+                </table>
             </div>
         </section>
         <section>
@@ -54,13 +74,16 @@
                     ID User <input type="text" placeholder="ID Usuario" id="id-user">
                 </label>
                 <label for="monto">
-                   $ <input type="number" placeholder="Monto" id="in-monto">
+                    $ <input type="number" placeholder="Monto" id="in-monto">
                 </label>
                 <button type="button" id="bt-aportar">Aportar</button>
+                <small id="msj-aporte"></small>
             </div>
         </section>
     </main>
 
+    <script src="./js/objetos.js"></script>
     <script src="./js/main.js"></script>
 </body>
+
 </html>
