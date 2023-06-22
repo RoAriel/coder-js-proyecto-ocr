@@ -82,4 +82,4 @@ usr3.aportar(156);
 usr4.aportar(700);
 usr5.aportar(100);
 
-const usuarios = [usr1, usr2, usr3, usr4, usr5, usr6,usr7];
+const baseUsuarios = [usr1, usr2, usr3, usr4, usr5, usr6,usr7];

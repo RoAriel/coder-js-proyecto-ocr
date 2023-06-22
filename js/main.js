@@ -1,5 +1,40 @@
-// VARIABLES GLOBALES
+// Uso del Storage
+let storageUsers = (localStorage.getItem('usuarios')) || JSON.stringify(baseUsuarios);
 
+let usersParse = JSON.parse(storageUsers);
+
+function convertirAListaDeAportes(userParse){
+    let aportes = [];
+    for(let aporteLiteral of userParse.aportes){
+        const aporte = new Aporte(aporteLiteral.id,parseFloat(aporteLiteral.monto));
+        aporte.fecha = new Date(aporteLiteral.fecha);
+        aportes.push(aporte);
+    };
+    return aportes;
+};
+
+function convertirObjLiteralAUsuario(usuariosParse){
+    const usuarios = [];
+    for(let userLiteral of usuariosParse){
+        const usuario = new Usuario(parseInt(userLiteral.id),userLiteral.nombre,userLiteral.apellido);
+        usuario.aportes = convertirAListaDeAportes(userLiteral);
+        usuarios.push(usuario);
+    };
+    return usuarios;
+};
+
+function  upDateYgetNuevoLocalStorage(ususuariosAGuardar){
+
+    let save = JSON.stringify(ususuariosAGuardar);
+    localStorage.setItem('usuarios',save);
+    storageUsers = (localStorage.getItem('usuarios'));
+    usersParse = JSON.parse(storageUsers);
+    usuarios = convertirObjLiteralAUsuario(usersParse);
+};
+
+let usuarios = convertirObjLiteralAUsuario(usersParse);
+
+// VARIABLES GLOBALES
 let idValido = false;
 let idUsuarios = usuarios.map(usr => usr.id);
 let nombresDeUsuarios = usuarios.map(usr => usr.nombre);
@@ -39,9 +74,10 @@ let table = document.getElementById('tablaBody');
 function renderizarUsuarios(users) {
     table.innerHTML = '';
     for (const usr of users) {
+
         table.innerHTML += `
         <tr>
-        <td>${usr.id}</td>
+        <td scope="row">${usr.id}</td>
         <td>${usr.nombre}</td>
         <td>${usr.apellido}</td>
         <td>$ ${usr.montoDelUtimoAporte()}</td>
@@ -95,9 +131,6 @@ btBuscar.addEventListener('click', () => {
             </tr>
             `;
     };
-
-
-    
 });
 
 let msj = document.getElementById('msj-aporte');
@@ -110,7 +143,6 @@ idIngresado.onchange = ()=>{
     parseID = parseInt(idIngresado.value);
 };
 
-console.log(parseID)
 idIngresado.onkeyup = () => {
     let parseID = parseInt(idIngresado.value);
     msj.innerText='';
@@ -134,13 +166,8 @@ montoIngresado.onkeyup = () => {
 };
 
 // Aportar
-
-
-
 let botonAportar = document.getElementById('bt-aportar');
 botonAportar.addEventListener('click', () => {
-
-
     if (idValido) {
 
         getUserByID(parseID).aportar(parseFloat(montoIngresado.value));
@@ -149,9 +176,10 @@ botonAportar.addEventListener('click', () => {
         idIngresado.value='';
 
         renderizarUsuarios(usuarios);
+        upDateYgetNuevoLocalStorage(usuarios)
+
     } else {
         msj.style.color = 'red';
         msj.innerText = 'ID o Monto incorrecto, valide por favor';
-
     }
-})
+});
