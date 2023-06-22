@@ -68,8 +68,6 @@ function getUserByID(idUsr) {
 
 // USO DEL DOM
 
-
-
 let table = document.getElementById('tablaBody');
 function renderizarUsuarios(users) {
     table.innerHTML = '';
