@@ -6,7 +6,7 @@ let usersParse = JSON.parse(storageUsers);
 function convertirAListaDeAportes(userParse){
     let aportes = [];
     for(let aporteLiteral of userParse.aportes){
-        const aporte = new Aporte(aporteLiteral.id,parseFloat(aporteLiteral.monto));
+        const aporte = new Aporte(parseInt(aporteLiteral.idUsr),parseFloat(aporteLiteral.monto));
         aporte.fecha = new Date(aporteLiteral.fecha);
         aportes.push(aporte);
     };
@@ -133,24 +133,25 @@ btBuscar.addEventListener('click', () => {
     };
 });
 
-let msj = document.getElementById('msj-aporte');
+let msjAportar = document.getElementById('msj-aporte');
 
-// Validar Input ID.
-let parseID = 0;
-let idIngresado = document.getElementById('id-user');
+// Validar Input ID Aportar.
+let idUserAportar = 0;
+let idInputAportar = document.getElementById('id-user');
 
-idIngresado.onchange = ()=>{
-    parseID = parseInt(idIngresado.value);
+idInputAportar.onchange = ()=>{
+    idUserAportar = parseInt(idInputAportar.value);
+    console.log('--->: '+idUserAportar)
 };
 
-idIngresado.onkeyup = () => {
-    let parseID = parseInt(idIngresado.value);
-    msj.innerText='';
-    if (!existeId(parseID)) {
-        idIngresado.style.color = 'red';
+idInputAportar.onkeyup = () => {
+    let idUserAportar = parseInt(idInputAportar.value);
+    msjAportar.innerText='';
+    if (!existeId(idUserAportar)) {
+        idInputAportar.style.color = 'red';
         idValido=false;
     } else {
-        idIngresado.style.color = 'green';
+        idInputAportar.style.color = 'green';
         idValido=true
     };
 };
@@ -166,20 +167,82 @@ montoIngresado.onkeyup = () => {
 };
 
 // Aportar
-let botonAportar = document.getElementById('bt-aportar');
-botonAportar.addEventListener('click', () => {
-    if (idValido) {
-
-        getUserByID(parseID).aportar(parseFloat(montoIngresado.value));
+let btAportar = document.getElementById('bt-aportar');
+btAportar.addEventListener('click', () => {
+    if (idValido && parseFloat(montoIngresado.value) > 0) {
+        let usuario = getUserByID(idUserAportar)
+        usuario.aportar(parseFloat(montoIngresado.value));
         
         montoIngresado.value = 0;
-        idIngresado.value='';
+        idInputAportar.value='';
 
         renderizarUsuarios(usuarios);
-        upDateYgetNuevoLocalStorage(usuarios)
+        upDateYgetNuevoLocalStorage(usuarios);
+        msjAportar.innerText = ` ✅ Aporte de ${usuario.nombre} ${usuario.apellido} realizado.`;
+        msjAportar.style.color = 'green';
 
     } else {
-        msj.style.color = 'red';
-        msj.innerText = 'ID o Monto incorrecto, valide por favor';
+        msjAportar.style.color = 'red';
+        msjAportar.innerText = ' ⛔ ID o Monto incorrecto, valide por favor.';
     }
 });
+
+// Historial
+
+// Validar Input ID Buscar Historial.
+let idUserHist = 0;
+let idUserHistValido = false;
+let idInputHist = document.getElementById('id-user-hist');
+let msjHist = document.getElementById('msj-hist');
+let nombreUsuario = document.getElementById('usr-hist-name');
+let montoTotal = document.getElementById('usr-monto-total');
+
+
+idInputHist.onchange = ()=>{
+    idUserHist = parseInt(idInputHist.value);
+};
+
+idInputHist.onkeyup = () => {
+    let idUserHist = parseInt(idInputHist.value);
+    msjHist.innerText='';
+    if (!existeId(idUserHist)) {
+        idInputHist.style.color = 'red';
+        idUserHistValido=false;
+    } else {
+        idInputHist.style.color = 'green';
+        idUserHistValido=true
+    };
+};
+
+let tablaHist = document.getElementById('tablaHistorial');
+function renderHistorialDeAportes(usuario){
+    tablaHist.innerHTML = '';
+
+    for(let aporte of usuario.aportes){
+        tablaHist.innerHTML += `
+        <tr>
+        <td scope="row">${aporte.idUsr}</td>
+        <td>$ ${aporte.monto}</td>
+        <td>${aporte.getFechaFormateada()}</td>
+        </tr>
+        `;
+    };
+};
+
+
+let btBuscarHist = document.getElementById('bt-buscar-hist');
+btBuscarHist.addEventListener('click', () => {
+
+    if(idUserHistValido){
+        let usuario = getUserByID(idUserHist);
+        nombreUsuario.innerText = `${usuario.nombre} ${usuario.apellido}`;
+        montoTotal.innerText = `$ ${usuario.aportesTotales()}`
+        renderHistorialDeAportes(usuario);
+        
+     }else{
+        msjHist.style.color = 'red';
+        msjHist.innerText = ' ⛔ ID incorrecto, valide por favor.';
+    };
+    idInputHist.value='';
+});
+

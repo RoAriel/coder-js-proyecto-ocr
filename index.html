@@ -20,10 +20,10 @@
     </header>
     <main>
         <section>
-            <table class="table table-sm ">
+            <table class="table table-striped ">
                 <thead>
                     <tr>
-                        <th scope="col">#ID</th>
+                        <th scope="col">#</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">Monto</th>
@@ -47,15 +47,15 @@
                 <button type="button" id="bt-buscar-usr">Buscar</button>
             </div>
             <div>
-                <table>
+                <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>#ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
                         </tr>
                     </thead>
-                    <tbody id="resultadosBody">
+                    <tbody id="resultadosBody" class="table-group-divider">
 
                     </tbody>
                 </table>
@@ -72,6 +72,37 @@
                 </label>
                 <button type="button" id="bt-aportar">Aportar</button>
                 <small id="msj-aporte"></small>
+            </div>
+        </section>
+        <section>
+            <div>
+                <h2>Historial</h2>
+                <label for="id-usuario-hist">
+                    ID User <input type="text" placeholder="ID Usuario" id="id-user-hist">
+                </label>
+                <button type="button" id="bt-buscar-hist">Buscar Hist</button>
+                <small id="msj-hist"></small>
+                <div class="conteiner-historial ">
+                    <p><strong>Usuario: </strong> </p>
+                    <p id="usr-hist-name"></p>
+                    <p><strong>Total de los aportes:</strong> </p>
+                    <p id="usr-monto-total"></p>
+                </div>
+
+            </div>
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Monto</th>
+                            <th scope="col">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaHistorial" class="table-group-divider">
+    
+                    </tbody>
+                </table> 
             </div>
         </section>
     </main>
