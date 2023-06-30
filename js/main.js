@@ -139,7 +139,6 @@ let idInputAportar = document.getElementById('id-user');
 
 idInputAportar.onchange = ()=>{
     idUserAportar = parseInt(idInputAportar.value);
-    console.log('--->: '+idUserAportar)
 };
 
 idInputAportar.onkeyup = () => {
@@ -176,12 +175,23 @@ btAportar.addEventListener('click', () => {
 
         renderizarUsuarios(usuarios);
         upDateYgetNuevoLocalStorage(usuarios);
-        msjAportar.innerText = ` ✅ Aporte de ${usuario.nombre} ${usuario.apellido} realizado.`;
-        msjAportar.style.color = 'green';
+
+        Toastify({
+            text: ` ✅ Aporte de ${usuario.nombre} ${usuario.apellido} realizado.`,
+            className: 'tamanioLetra',
+            style:{
+                background: 'linear-gradient(90deg, rgba(26,250,236,1) 0%, rgba(26,250,150,1) 66%)',
+            }
+            }).showToast();
 
     } else {
-        msjAportar.style.color = 'red';
-        msjAportar.innerText = ' ⛔ ID o Monto incorrecto, valide por favor.';
+        Toastify({
+            text: "⛔ ID incorrecto, valide por favor.",
+            className: 'tamanioLetra',
+            style:{
+                background:'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
+            }
+            }).showToast();
     }
 });
 
@@ -238,8 +248,14 @@ btBuscarHist.addEventListener('click', () => {
         renderHistorialDeAportes(usuario);
         
      }else{
-        msjHist.style.color = 'red';
-        msjHist.innerText = ' ⛔ ID incorrecto, valide por favor.';
+
+        Toastify({
+            text: "⛔ ID incorrecto, valide por favor.",
+            className: 'tamanioLetra',
+            style:{
+                background:'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
+            }
+            }).showToast();
     };
     idInputHist.value='';
 });
