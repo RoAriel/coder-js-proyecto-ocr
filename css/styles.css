@@ -12,7 +12,7 @@ p {
     font-size: 1.3rem;
 }
 
-.tamanioLetra{
+.tamanio-letra{
     font-size: 1.3rem;
 }
 
@@ -48,4 +48,10 @@ p {
     margin-right : 3rem;
     padding: 1rem;
     gap: 3rem;
+};
+
+.total-app{
+    border: solid 1px #09f;
+    border-radius: 6px;
+    padding: 1rem;
 };

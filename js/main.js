@@ -1,38 +1,60 @@
 // Uso del Storage
 let storageUsers = (localStorage.getItem('usuarios')) || JSON.stringify(baseUsuarios);
-
 let usersParse = JSON.parse(storageUsers);
 
-function convertirAListaDeAportes(userParse){
+function convertirAListaDeAportes(userParse) {
     let aportes = [];
-    for(let aporteLiteral of userParse.aportes){
-        const aporte = new Aporte(parseInt(aporteLiteral.idUsr),parseFloat(aporteLiteral.monto));
+    for (let aporteLiteral of userParse.aportes) {
+        const aporte = new Aporte(parseInt(aporteLiteral.idUsr), parseFloat(aporteLiteral.monto));
         aporte.fecha = new Date(aporteLiteral.fecha);
         aportes.push(aporte);
     };
     return aportes;
 };
 
-function convertirObjLiteralAUsuario(usuariosParse){
+function convertirObjLiteralAUsuario(usuariosParse) {
     const usuarios = [];
-    for(let userLiteral of usuariosParse){
-        const usuario = new Usuario(parseInt(userLiteral.id),userLiteral.nombre,userLiteral.apellido);
+    for (let userLiteral of usuariosParse) {
+        const usuario = new Usuario(parseInt(userLiteral.id), userLiteral.nombre, userLiteral.apellido);
         usuario.aportes = convertirAListaDeAportes(userLiteral);
         usuarios.push(usuario);
     };
     return usuarios;
 };
 
-function  upDateYgetNuevoLocalStorage(ususuariosAGuardar){
-
+function updateLSUsers(ususuariosAGuardar) {
+    
     let save = JSON.stringify(ususuariosAGuardar);
-    localStorage.setItem('usuarios',save);
-    storageUsers = (localStorage.getItem('usuarios'));
-    usersParse = JSON.parse(storageUsers);
-    usuarios = convertirObjLiteralAUsuario(usersParse);
+    localStorage.setItem('usuarios', save);
+    //storageUsers = (localStorage.getItem('usuarios'));
+    //usersParse = JSON.parse(storageUsers);
+    //usuarios = convertirObjLiteralAUsuario(usersParse);
+};
+
+const updateLSTotalRecaudacion = (total) => {
+    let saveTotal = JSON.stringify(total);
+    localStorage.setItem('total', saveTotal);
+};
+
+function appAportes() {
+    let total=0
+    usuarios.forEach(usuario => {
+        total += usuario.aportesTotales();
+    });
+    return total;
 };
 
 let usuarios = convertirObjLiteralAUsuario(usersParse);
+let storageTotal = (localStorage.getItem('total')) || JSON.stringify(appAportes());
+let totalDeAportesApp = parseFloat(storageTotal);
+
+
+let recaudacion = document.getElementById('recaudacion');
+const renderiazarTotal=(total)=>{
+    recaudacion.innerText = `$ ${total}`;
+};
+
+renderiazarTotal(totalDeAportesApp);
 
 // VARIABLES GLOBALES
 let idValido = false;
@@ -42,7 +64,7 @@ let apellidosDeUsuarios = usuarios.map(usr => usr.apellido);
 
 // FUNCIONES DE RECORRIDO Y USO DE CLASES
 
-function existeUserDeNombre(usrNombre, usrApellido) {
+function existeUserDeNombre(usrNombre) {
     return (nombresDeUsuarios.includes(usrNombre));
 };
 
@@ -117,17 +139,18 @@ btBuscar.addEventListener('click', () => {
         let usuariosEncontrados = lista1.concat(lista2)
         renderizarReusltadosDeBusqueda(usuariosEncontrados);
         usrNameBuscado.value = '';
-        usrApellidoBuscado.value ='';
+        usrApellidoBuscado.value = '';
     } else {
         resultados.innerHTML = '';
-
-        resultados.innerHTML += `
-            <tr>
-            <td>Usuario no encontrado</td>
-            <td>N/A</td>
-            <td>N/A</td>
-            </tr>
-            `;
+        usrNameBuscado.value = '';
+        usrApellidoBuscado.value = '';
+        Toastify({
+            text: "⛔ Usuario no encontrado.",
+            className: 'tamanioLetra',
+            style: {
+                background: 'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
+            }
+        }).showToast();
     };
 });
 
@@ -137,24 +160,25 @@ let msjAportar = document.getElementById('msj-aporte');
 let idUserAportar = 0;
 let idInputAportar = document.getElementById('id-user');
 
-idInputAportar.onchange = ()=>{
+idInputAportar.onchange = () => {
     idUserAportar = parseInt(idInputAportar.value);
 };
 
 idInputAportar.onkeyup = () => {
     let idUserAportar = parseInt(idInputAportar.value);
-    msjAportar.innerText='';
+    msjAportar.innerText = '';
     if (!existeId(idUserAportar)) {
         idInputAportar.style.color = 'red';
-        idValido=false;
+        idValido = false;
     } else {
         idInputAportar.style.color = 'green';
-        idValido=true
+        idValido = true
     };
 };
 
 // Validar Input Monto.
 let montoIngresado = document.getElementById('in-monto');
+
 montoIngresado.onkeyup = () => {
     if (parseFloat(montoIngresado.value) <= 0) {
         document.getElementById('bt-aportar').disabled = true;
@@ -165,33 +189,37 @@ montoIngresado.onkeyup = () => {
 
 // Aportar
 let btAportar = document.getElementById('bt-aportar');
+
 btAportar.addEventListener('click', () => {
     if (idValido && parseFloat(montoIngresado.value) > 0) {
         let usuario = getUserByID(idUserAportar)
         usuario.aportar(parseFloat(montoIngresado.value));
-        
-        montoIngresado.value = 0;
-        idInputAportar.value='';
 
+        montoIngresado.value = 0;
+        idInputAportar.value = '';
+        let aportes = appAportes()
         renderizarUsuarios(usuarios);
-        upDateYgetNuevoLocalStorage(usuarios);
+        updateLSUsers(usuarios);
+        updateLSTotalRecaudacion(aportes);
+        renderiazarTotal(aportes);
+
 
         Toastify({
             text: ` ✅ Aporte de ${usuario.nombre} ${usuario.apellido} realizado.`,
             className: 'tamanioLetra',
-            style:{
+            style: {
                 background: 'linear-gradient(90deg, rgba(26,250,236,1) 0%, rgba(26,250,150,1) 66%)',
             }
-            }).showToast();
+        }).showToast();
 
     } else {
         Toastify({
             text: "⛔ ID incorrecto, valide por favor.",
             className: 'tamanioLetra',
-            style:{
-                background:'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
+            style: {
+                background: 'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
             }
-            }).showToast();
+        }).showToast();
     }
 });
 
@@ -206,27 +234,27 @@ let nombreUsuario = document.getElementById('usr-hist-name');
 let montoTotal = document.getElementById('usr-monto-total');
 
 
-idInputHist.onchange = ()=>{
+idInputHist.onchange = () => {
     idUserHist = parseInt(idInputHist.value);
 };
 
 idInputHist.onkeyup = () => {
     let idUserHist = parseInt(idInputHist.value);
-    msjHist.innerText='';
+    msjHist.innerText = '';
     if (!existeId(idUserHist)) {
         idInputHist.style.color = 'red';
-        idUserHistValido=false;
+        idUserHistValido = false;
     } else {
         idInputHist.style.color = 'green';
-        idUserHistValido=true
+        idUserHistValido = true
     };
 };
 
 let tablaHist = document.getElementById('tablaHistorial');
-function renderHistorialDeAportes(usuario){
+function renderHistorialDeAportes(usuario) {
     tablaHist.innerHTML = '';
 
-    for(let aporte of usuario.aportes){
+    for (let aporte of usuario.aportes) {
         tablaHist.innerHTML += `
         <tr>
         <td scope="row">${aporte.idUsr}</td>
@@ -241,22 +269,22 @@ function renderHistorialDeAportes(usuario){
 let btBuscarHist = document.getElementById('bt-buscar-hist');
 btBuscarHist.addEventListener('click', () => {
 
-    if(idUserHistValido){
+    if (idUserHistValido) {
         let usuario = getUserByID(idUserHist);
         nombreUsuario.innerText = `${usuario.nombre} ${usuario.apellido}`;
         montoTotal.innerText = `$ ${usuario.aportesTotales()}`
         renderHistorialDeAportes(usuario);
-        
-     }else{
+
+    } else {
 
         Toastify({
             text: "⛔ ID incorrecto, valide por favor.",
             className: 'tamanioLetra',
-            style:{
-                background:'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
+            style: {
+                background: 'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
             }
-            }).showToast();
+        }).showToast();
     };
-    idInputHist.value='';
+    idInputHist.value = '';
 });
 

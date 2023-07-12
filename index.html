@@ -21,9 +21,14 @@
         </div>
     </header>
     <main>
+        <div class="center-inputs tamanio-letra total-app">
+            <label for="recaudacionTotal">
+                Recaudación: <span id="recaudacion"></span>
+            </label>
+        </div>
         <section>
             <div class="tabla-margen">
-                <table class="table table-striped conteiner-table tamanioLetra">
+                <table class="table table-striped conteiner-table tamanio-letra">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -43,7 +48,7 @@
             <div class="conteiner-titulo">
                 <h2>Buscar Usuario</h2>
             </div>
-            <div class="center-inputs tamanioLetra">
+            <div class="center-inputs tamanio-letra">
                 <label for="name-usuario">
                     Nombre <input type="text" placeholder="Nombre usuario" id="name-usr">
                 </label>
@@ -53,7 +58,7 @@
                 <button class="btn btn-outline-primary" type="button" id="bt-buscar-usr">Buscar</button>
             </div>
             <div class="tabla-margen">
-                <table class="table table-striped tamanioLetra">
+                <table class="table table-striped tamanio-letra">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -71,7 +76,7 @@
             <div class="conteiner-titulo">
                 <h2>Nuevo aporte</h2>
             </div>
-            <div class="center-inputs tamanioLetra">
+            <div class="center-inputs tamanio-letra">
                 <label for="id-usuario">
                     ID User <input type="text" placeholder="ID Usuario" id="id-user">
                 </label>
@@ -86,7 +91,7 @@
             <div class="conteiner-titulo">
                 <h2>Historial</h2>
             </div>
-            <div class="center-inputs tamanioLetra">
+            <div class="center-inputs tamanio-letra">
                 <label for="id-usuario-hist">
                     ID User <input type="text" placeholder="ID Usuario" id="id-user-hist">
                 </label>
@@ -100,7 +105,7 @@
                     <p id="usr-monto-total"></p>
                 </div>
             <div class="tabla-margen">
-                <table class="table table-striped tamanioLetra">
+                <table class="table table-striped tamanio-letra">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -122,6 +127,7 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script> 
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </body>
 
 </html>
