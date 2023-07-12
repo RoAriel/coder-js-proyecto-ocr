@@ -2,15 +2,22 @@
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-}
+};
 
 html {
     font-size: 62.5%;
-}
+};
 
 p {
     font-size: 1.3rem;
-}
+};
+
+.total-app{
+    border: solid 1px #09f;
+    border-radius: 6px;
+    padding: 1rem;
+};
+
 
 .tamanio-letra{
     font-size: 1.3rem;
@@ -50,8 +57,8 @@ p {
     gap: 3rem;
 };
 
-.total-app{
-    border: solid 1px #09f;
-    border-radius: 6px;
-    padding: 1rem;
+.pie{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 };
