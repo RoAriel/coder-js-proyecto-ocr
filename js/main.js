@@ -76,14 +76,6 @@ function existeId(usrID) {
     return (idUsuarios.includes(usrID));
 };
 
-function getUserByName(usrName) {
-    return usuarios.find(usr => usr.nombre == usrName);
-};
-
-function getUserByApellido(usrApellido) {
-    return usuarios.find(usr => usr.apellido == usrApellido);
-};
-
 function getUserByID(idUsr) {
     return usuarios.find(usr => usr.id == idUsr);
 };
@@ -161,19 +153,24 @@ let idUserAportar = 0;
 let idInputAportar = document.getElementById('id-user');
 
 idInputAportar.onchange = () => {
-    idUserAportar = parseInt(idInputAportar.value);
+   idUserAportar = parseInt(idInputAportar.value);
 };
 
+const validInputID =(id,elem)=>{
+    if (!existeId(id)) {
+        elem.style.color = 'red';
+         idValido = false;
+         idUserHistValido = false;
+     } else {
+        elem.style.color = 'green';
+         idValido = true
+         idUserHistValido = true;
+     };
+}
 idInputAportar.onkeyup = () => {
     let idUserAportar = parseInt(idInputAportar.value);
     msjAportar.innerText = '';
-    if (!existeId(idUserAportar)) {
-        idInputAportar.style.color = 'red';
-        idValido = false;
-    } else {
-        idInputAportar.style.color = 'green';
-        idValido = true
-    };
+    validInputID(idUserAportar,idInputAportar);
 };
 
 // Validar Input Monto.
@@ -220,7 +217,7 @@ btAportar.addEventListener('click', () => {
                 background: 'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
             }
         }).showToast();
-    }
+    };
 });
 
 // Historial
@@ -241,13 +238,8 @@ idInputHist.onchange = () => {
 idInputHist.onkeyup = () => {
     let idUserHist = parseInt(idInputHist.value);
     msjHist.innerText = '';
-    if (!existeId(idUserHist)) {
-        idInputHist.style.color = 'red';
-        idUserHistValido = false;
-    } else {
-        idInputHist.style.color = 'green';
-        idUserHistValido = true
-    };
+    validInputID(idUserHist,idInputHist);
+
 };
 
 let tablaHist = document.getElementById('tablaHistorial');
@@ -276,7 +268,7 @@ btBuscarHist.addEventListener('click', () => {
         renderHistorialDeAportes(usuario);
 
     } else {
-
+console.log(idUserHistValido)
         Toastify({
             text: "⛔ ID incorrecto, valide por favor.",
             className: 'tamanioLetra',
