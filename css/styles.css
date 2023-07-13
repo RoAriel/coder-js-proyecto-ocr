@@ -12,10 +12,16 @@ p {
     font-size: 1.3rem;
 };
 
+label{
+    font-weight: bold;
+};
+
 .total-app{
     border: solid 1px #09f;
     border-radius: 6px;
     padding: 1rem;
+
+
 };
 
 
@@ -30,7 +36,7 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding:  1rem;
+    padding:  0.5rem;
     margin-top: 1.5rem;
 }
 .tabla-margen{
