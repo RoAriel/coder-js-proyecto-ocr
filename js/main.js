@@ -1,4 +1,6 @@
+
 // Uso del Storage
+
 let storageUsers = (localStorage.getItem('usuarios')) || JSON.stringify(baseUsuarios);
 let usersParse = JSON.parse(storageUsers);
 
@@ -23,7 +25,7 @@ function convertirObjLiteralAUsuario(usuariosParse) {
 };
 
 function updateLSUsers(ususuariosAGuardar) {
-    
+
     let save = JSON.stringify(ususuariosAGuardar);
     localStorage.setItem('usuarios', save);
 };
@@ -33,8 +35,9 @@ const updateLSTotalRecaudacion = (total) => {
     localStorage.setItem('total', saveTotal);
 };
 
+// Funcion que suma todos los aportes ingresados
 function appAportes() {
-    let total=0
+    let total = 0
     usuarios.forEach(usuario => {
         total += usuario.aportesTotales();
     });
@@ -47,13 +50,13 @@ let totalDeAportesApp = parseFloat(storageTotal);
 
 
 let recaudacion = document.getElementById('recaudacion');
-const renderiazarTotal=(total)=>{
+const renderiazarTotal = (total) => {
     recaudacion.innerText = `$ ${total}`;
 };
 
 renderiazarTotal(totalDeAportesApp);
 
-// VARIABLES GLOBALES
+// VARIABLES 
 let idValido = false;
 let idUsuarios = usuarios.map(usr => usr.id);
 let nombresDeUsuarios = usuarios.map(usr => usr.nombre);
@@ -87,16 +90,38 @@ function renderizarUsuarios(users) {
         table.innerHTML += `
         <tr>
         <td scope="row">${usr.id}</td>
+        <td><img id="${usr.id}" src=""></td>
         <td>${usr.nombre}</td>
         <td>${usr.apellido}</td>
         <td>$ ${usr.montoDelUtimoAporte()}</td>
         <td>${usr.fechaDelUtimoAporte()}</td>
+
         </tr>
         `;
     };
 };
 
+
 renderizarUsuarios(usuarios);
+
+// USO DEL GET
+
+async function getAvatarPk(id) {
+    const POKEAPI = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+    const res = await fetch(POKEAPI);
+    const data = await res.json()
+    let imgPk = data.sprites.front_default
+    return imgPk
+};
+
+for (const usrId of idUsuarios) {
+    const imgUserID = document.getElementById(`${usrId}`);
+    getAvatarPk(usrId)
+        .then((data) => {
+            imgUserID.setAttribute('src', data)
+        })
+}
+
 
 // Buscar Usuarios y Mostrar usuarios
 
@@ -144,31 +169,34 @@ btBuscar.addEventListener('click', () => {
     };
 });
 
-let msjAportar = document.getElementById('msj-aporte');
 
 // Validar Input ID Aportar.
 let idUserAportar = 0;
 let idInputAportar = document.getElementById('id-user');
 
 idInputAportar.onchange = () => {
-   idUserAportar = parseInt(idInputAportar.value);
+    idUserAportar = parseInt(idInputAportar.value);
 };
 
-const validInputID =(id,elem)=>{
+// Valido los lo que ingreso a los inpus  
+const validInputID = (id, elem) => {
     if (!existeId(id)) {
         elem.style.color = 'red';
-         idValido = false;
-         idUserHistValido = false;
-     } else {
+        idValido = false;
+        idUserHistValido = false;
+    } else {
         elem.style.color = 'green';
-         idValido = true
-         idUserHistValido = true;
-     };
+        idValido = true
+        idUserHistValido = true;
+    };
 }
+
+let msjAportar = document.getElementById('msj-aporte');
+
 idInputAportar.onkeyup = () => {
     let idUserAportar = parseInt(idInputAportar.value);
     msjAportar.innerText = '';
-    validInputID(idUserAportar,idInputAportar);
+    validInputID(idUserAportar, idInputAportar);
 };
 
 // Validar Input Monto.
@@ -236,7 +264,7 @@ idInputHist.onchange = () => {
 idInputHist.onkeyup = () => {
     let idUserHist = parseInt(idInputHist.value);
     msjHist.innerText = '';
-    validInputID(idUserHist,idInputHist);
+    validInputID(idUserHist, idInputHist);
 
 };
 
@@ -266,7 +294,7 @@ btBuscarHist.addEventListener('click', () => {
         renderHistorialDeAportes(usuario);
 
     } else {
-console.log(idUserHistValido)
+        console.log(idUserHistValido)
         Toastify({
             text: "⛔ ID incorrecto, valide por favor.",
             className: 'tamanioLetra',
@@ -286,34 +314,8 @@ const formulario = document.querySelector('form');
 formulario.addEventListener('submit', nuevoUser);
 
 
-function nuevoUser(e){
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.target))
-
-    const {nombre,apellido, aporte} = data;
-
-    const newUser = new Usuario(maxId+1, nombre,apellido);
-    newUser.aportar(parseFloat(aporte));
-    usuarios.push(newUser);   
-    let aportes = appAportes()
-    renderizarUsuarios(usuarios);
-    updateLSUsers(usuarios);
-    updateLSTotalRecaudacion(aportes);
-    renderiazarTotal(aportes);
-
-    // UPDATE DE VARIABLES GLOBALES DE LOS ID y NOMBRES
-    idUsuarios = usuarios.map(usr => usr.id);
-    nombresDeUsuarios = usuarios.map(usr => usr.nombre);
-    apellidosDeUsuarios = usuarios.map(usr => usr.apellido);
-
-    // SIMULO LE POST 
-    enviarNuevoUser(newUser);
-    document.querySelector('form').reset()
-    
-
-}
-
-function enviarNuevoUser(user){
+// USO DE POST
+function enviarNuevoUser(user) {
     const URLPOST = 'https://jsonplaceholder.typicode.com/posts';
     fetch(URLPOST, {
         method: 'POST',
@@ -328,14 +330,43 @@ function enviarNuevoUser(user){
     })
         .then(response => response.json())
         .then((data) =>
-         
-        Toastify({
-            text: `Se agrego el usuario ${data.title} con ID ${data.userId} .`,
-            className: 'tamanioLetra',
-            style: {
-                background: 'linear-gradient(90deg, rgba(26,250,236,1) 0%, rgba(26,250,150,1) 66%)',
-            }
-        }).showToast()
-        )
+
+            Toastify({
+                text: `Se agrego el usuario ${data.title} con ID ${data.userId} .`,
+                className: 'tamanioLetra',
+                style: {
+                    background: 'linear-gradient(90deg, rgba(26,250,236,1) 0%, rgba(26,250,150,1) 66%)',
+                }
+            }).showToast()
+        );
+};
+
+function nuevoUser(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target))
+
+    const { nombre, apellido, aporte } = data;
+
+    const newUser = new Usuario(maxId + 1, nombre, apellido);
+    newUser.aportar(parseFloat(aporte));
+    usuarios.push(newUser);
+    let aportes = appAportes()
+    renderizarUsuarios(usuarios);
+    updateLSUsers(usuarios);
+    updateLSTotalRecaudacion(aportes);
+    renderiazarTotal(aportes);
+
+    // UPDATE DE VARIABLES GLOBALES DE LOS ID y NOMBRES
+    idUsuarios = usuarios.map(usr => usr.id);
+    nombresDeUsuarios = usuarios.map(usr => usr.nombre);
+    apellidosDeUsuarios = usuarios.map(usr => usr.apellido);
+
+    // SIMULO LE POST HACIA UN BACKEND
+    enviarNuevoUser(newUser);
+    document.querySelector('form').reset()
+
+
 }
+
+
 
