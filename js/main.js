@@ -109,19 +109,20 @@ renderizarUsuarios(usuarios);
 async function getAvatarPk(id) {
     const POKEAPI = `https://pokeapi.co/api/v2/pokemon/${id}/`;
     const res = await fetch(POKEAPI);
-    const data = await res.json()
-    let imgPk = data.sprites.front_default
-    return imgPk
+    const data = await res.json();
+    return data.sprites.front_default;
+     
 };
-
-for (const usrId of idUsuarios) {
+const updateAvatar=(idUsers)=>{
+for (const usrId of idUsers) {
     const imgUserID = document.getElementById(`${usrId}`);
     getAvatarPk(usrId)
         .then((data) => {
-            imgUserID.setAttribute('src', data)
+            imgUserID.setAttribute('src', data);
         })
-}
+}}
 
+updateAvatar(idUsuarios);
 
 // Buscar Usuarios y Mostrar usuarios
 
@@ -225,6 +226,7 @@ btAportar.addEventListener('click', () => {
         updateLSUsers(usuarios);
         updateLSTotalRecaudacion(aportes);
         renderiazarTotal(aportes);
+        updateAvatar(idUsuarios);
 
 
         Toastify({
@@ -355,9 +357,10 @@ function nuevoUser(e) {
     updateLSUsers(usuarios);
     updateLSTotalRecaudacion(aportes);
     renderiazarTotal(aportes);
-
+    
     // UPDATE DE VARIABLES GLOBALES DE LOS ID y NOMBRES
     idUsuarios = usuarios.map(usr => usr.id);
+    updateAvatar(idUsuarios);
     nombresDeUsuarios = usuarios.map(usr => usr.nombre);
     apellidosDeUsuarios = usuarios.map(usr => usr.apellido);
 
