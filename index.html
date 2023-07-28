@@ -16,27 +16,28 @@
     <nav>
     </nav>
     <header>
-        <div class="conteiner-titulo text-white">
+        <div class="d-flex flex-row p-2 justify-content-center align-items-center text-white">
             <h1>Control de Aportes</h1>
         </div>
     </header>
     <main>
-        <div class="center-inputs tamanio-letra  bg-primary bg-gradient text-white rounded-1 p-1 m-3">
+        <div
+            class="d-flex flex-row p-2 justify-content-center align-items-center  bg-primary bg-gradient text-white rounded-1 m-3">
             <label class="text-white" for="recaudacion">
                 Recaudación: <strong id="recaudacion"></strong>
             </label class="text-white">
         </div>
-        <section>
-            <div class="tabla-margen">
-                <table class="table table-striped conteiner-table tamanio-letra align-middle">
+        <section class = "m-1">
+            <div>
+                <table class="table table-striped table-sm  conteiner-table tamanio-letra align-middle ms-3">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Avatar Pk</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Ultimo aprte</th>
-                            <th scope="col">Fecha</th>
+                            <th class="p-1" scope="col">#</th>
+                            <th class="p-1" scope="col">Avatar Pk</th>
+                            <th class="p-1" scope="col">Nombre</th>
+                            <th class="p-1" scope="col">Apellido</th>
+                            <th class="p-1" scope="col">Último aporte</th>
+                            <th class="p-1" scope="col">Fecha</th>
                         </tr>
                     </thead>
                     <tbody id="tablaBody" class="table-group-divider">
@@ -46,22 +47,23 @@
             </div>
         </section>
         <section>
-            <div class="conteiner-titulo bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
+            <div
+                class="d-flex flex-row p-2 justify-content-center align-items-center text-white bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
                 <h2>Buscar Usuario</h2>
             </div>
-            <div class="center-inputs tamanio-letra">
-                <label class="text-white" for="name-usuario">
+            <div class="d-flex flex-row p-2 justify-content-center align-items-center">
+                <label class="text-white p-2" for="name-usuario">
                     Nombre <input class="border-primary rounded-2" class="border-primary rounded-2" type="text"
                         placeholder="Nombre usuario" id="name-usr">
                 </label class="text-white">
-                <label class="text-white" for="apellido-usuario">
+                <label class="text-white p-2" for="apellido-usuario">
                     Apellido <input class="border-primary rounded-2" type="text" placeholder="Apellido usuario"
                         id="lastName-usr">
                 </label class="text-white">
                 <button class="btn btn-outline-primary" type="button" id="bt-buscar-usr">Buscar</button>
             </div>
-            <div class="tabla-margen">
-                <table class="table table-striped tamanio-letra">
+            <div class="">
+                <table class="table table-striped table-sm  conteiner-table tamanio-letra align-middle ms-3">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -76,40 +78,42 @@
             </div>
         </section>
         <section>
-            <div class="conteiner-titulo bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
+            <div
+                class="d-flex flex-row p-2 justify-content-center align-items-center bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
                 <h2>Nuevo aporte</h2>
             </div>
-            <div class="center-inputs tamanio-letra">
-                <label class="text-white" for="id-usuario">
+            <div class="d-flex flex-row p-2 justify-content-center align-items-center">
+                <label class="text-white p-2" for="id-usuario">
                     ID User <input class="border-primary rounded-2" type="text" placeholder="ID Usuario" id="id-user">
-                </label class="text-white">
-                <label class="text-white" for="monto">
+                </label>
+                <label class="text-white p-2" for="monto">
                     $ <input class="border-primary rounded-2" type="number" placeholder="Monto" id="in-monto">
-                </label class="text-white">
+                </label>
                 <button class="btn btn-outline-primary" type="button" id="bt-aportar">Aportar</button>
                 <small id="msj-aporte"></small>
             </div>
         </section>
         <section>
-            <div class="conteiner-titulo bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
+            <div
+                class="d-flex flex-row p-2 justify-content-center align-items-center text-white bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
                 <h2>Historial</h2>
             </div>
-            <div class="center-inputs tamanio-letra">
-                <label class="text-white" for="id-usuario-hist">
+            <div class="d-flex flex-row p-2 justify-content-center align-items-center">
+                <label class="text-white p-2" for="id-usuario-hist">
                     ID User <input class="border-primary rounded-2" type="text" placeholder="ID Usuario"
                         id="id-user-hist">
-                </label class="text-white">
+                </label>
                 <button class="btn btn-outline-primary" btn type="button" id="bt-buscar-hist">Buscar Hist</button>
                 <small id="msj-hist"></small>
             </div>
-            <div class="conteiner-historial">
-                <p class="text-white"><strong>Usuario: </strong> </p>
-                <p class="text-white" id="usr-hist-name"></p>
-                <p class="text-white"><strong>Total de los aportes:</strong> </p>
-                <p class="text-white" id="usr-monto-total"></p>
+            <div class="d-flex flex-row p-2 justify-content-center align-items-center">
+                <p class="text-white m-3"><strong>Usuario: </strong> </p>
+                <p class="text-white m-3"><strong id="usr-hist-name"></strong></p>
+                <p class="text-white m-3"><strong>Total de los aportes:</strong> </p>
+                <p class="text-white m-3"><strong id="usr-monto-total"></strong></p>
             </div>
-            <div class="tabla-margen">
-                <table class="table table-striped tamanio-letra">
+            <div class="">
+                <table class="table table-striped table-sm  conteiner-table tamanio-letra align-middle ms-3">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -124,26 +128,27 @@
             </div>
         </section>
         <section>
-            <div class="conteiner-titulo bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
+            <div
+                class="d-flex flex-row p-2 justify-content-center align-items-center text-white bg-primary bg-gradient text-white bg-opacity-50 rounded-1 p-1 m-3">
                 <h2>Agregar nuevo Usuario</h2>
             </div>
             <form action="" method="post">
 
-                <div class="d-flex flex-row mb-3 justify-content-center ">
-                    <div class="form-group center-inputs tamanio-letra">
-                        <label class="text-white" for="nombre">Nombre</label class="text-white">
+                <div class="d-flex flex-row p-2 justify-content-center  align-items-center">
+                    <div class="form-group d-flex flex-row p-2 justify-content-center align-items-center">
+                        <label class="text-white p-2" for="nombre">Nombre</label>
                         <input name="nombre" class="form-control border-primary rounded-2" type="text"
-                            placeholder="Nombre">
+                            placeholder="Nombre" required>
                     </div>
-                    <div class="form-group center-inputs tamanio-letra">
-                        <label class="text-white" for="apellido" name="apellido">Apellido</label
-                            class="text-white">
+                    <div class="form-group d-flex flex-row p-2 justify-content-center align-items-center">
+                        <label class="text-white p-2" for="apellido" name="apellido">Apellido</label>
                         <input name="apellido" class="form-control border-primary rounded-2" type="text"
-                            placeholder="Apellido">
+                            placeholder="Apellido" required>
                     </div>
-                    <div class="form-group center-inputs tamanio-letra">
-                        <label class="text-white" for="aporte">Aporte</label class="text-white">
-                        <input name="aporte" class="form-control border-primary rounded-2" type="number" placeholder="$">
+                    <div class="form-group d-flex flex-row p-2 justify-content-center align-items-center">
+                        <label class="text-white p-2" for="aporte">Aporte</label>
+                        <input name="aporte" class="form-control border-primary rounded-2" type="number"
+                            placeholder="$" required>
                     </div>
                     <input type="submit" class="btn btn-outline-primary p-2 m-3" value="Agregar">
                 </div>
@@ -151,7 +156,7 @@
         </section>
     </main>
     <footer>
-        <div class="d-flex flex-row mb-3 justify-content-center p-2 m-3 bg-primary bg-gradient text-white">
+        <div class="d-flex flex-row p-2 justify-content-center align-items-center text-white  bg-primary bg-gradient">
             <h6>@roariel</h6>
         </div>
     </footer>
