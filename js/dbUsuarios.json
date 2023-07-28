@@ -1,0 +1,76 @@
+{
+    "usuarios": [
+        {
+            "id": 1,
+            "nombre": "Pepe",
+            "apellido": "Mujica",
+            "aportes": [
+                {
+                    "idUsr": 1,
+                    "monto": 123,
+                    "fecha": "2023-07-28T14:13:00.566Z"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "nombre": "Mari",
+            "apellido": "Lozo",
+            "aportes": [
+                {
+                    "idUsr": 2,
+                    "monto": 143,
+                    "fecha": "2023-07-28T14:13:00.566Z"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "nombre": "Juan",
+            "apellido": "Loto",
+            "aportes": [
+                {
+                    "idUsr": 3,
+                    "monto": 156,
+                    "fecha": "2023-07-28T14:13:00.566Z"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "nombre": "Cris",
+            "apellido": "Gonzalez",
+            "aportes": [
+                {
+                    "idUsr": 4,
+                    "monto": 700,
+                    "fecha": "2023-07-28T14:13:00.566Z"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "nombre": "Lola",
+            "apellido": "Indigo",
+            "aportes": [
+                {
+                    "idUsr": 5,
+                    "monto": 100,
+                    "fecha": "2023-07-28T14:13:00.566Z"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "nombre": "Mari",
+            "apellido": "Miranda",
+            "aportes": []
+        },
+        {
+            "id": 7,
+            "nombre": "Xavi",
+            "apellido": "Gonzalez",
+            "aportes": []
+        }
+    ]
+}
