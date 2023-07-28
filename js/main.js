@@ -1,28 +1,16 @@
 
 // Uso del Storage
 
-let storageUsers = (localStorage.getItem('usuarios')) || JSON.stringify(baseUsuarios);
-let usersParse = JSON.parse(storageUsers);
+let storageUsers = (localStorage.getItem('usuarios')) || JSON.stringify(convertListLiteralDeUsuariosAListDeUsuarios())
 
-function convertirAListaDeAportes(userParse) {
-    let aportes = [];
-    for (let aporteLiteral of userParse.aportes) {
-        const aporte = new Aporte(parseInt(aporteLiteral.idUsr), parseFloat(aporteLiteral.monto));
-        aporte.fecha = new Date(aporteLiteral.fecha);
-        aportes.push(aporte);
-    };
-    return aportes;
-};
 
-function convertirObjLiteralAUsuario(usuariosParse) {
-    const usuarios = [];
-    for (let userLiteral of usuariosParse) {
-        const usuario = new Usuario(parseInt(userLiteral.id), userLiteral.nombre, userLiteral.apellido);
-        usuario.aportes = convertirAListaDeAportes(userLiteral);
-        usuarios.push(usuario);
-    };
-    return usuarios;
-};
+
+
+
+
+//let usersParse = JSON.parse(storageUsers);
+
+/*
 
 function updateLSUsers(ususuariosAGuardar) {
 
@@ -371,5 +359,5 @@ function nuevoUser(e) {
 
 }
 
-
+*/
 
