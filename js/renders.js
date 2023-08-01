@@ -68,3 +68,9 @@ function renderHistorialDeAportes(usuario) {
         `;
     };
 };
+
+function refresh(usuarios,aportes,idUsuarios) {
+    renderizarUsuarios(usuarios);
+    renderiazarTotal(aportes);
+    renderAvatar(idUsuarios);
+}

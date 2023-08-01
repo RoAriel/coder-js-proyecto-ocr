@@ -1,3 +1,4 @@
+// USO DE GET
 
 async function getUsuariosFromJSON() {
     const URLUSUARIOS = 'js/dbUsuarios.json';
@@ -25,4 +26,26 @@ async function getAvatarPk(id) {
     const data = await res.json();
     return data.sprites.front_default;
 
+};
+
+// USO DE POST
+function enviarNuevoUser(user) {
+    const URLPOST = 'https://jsonplaceholder.typicode.com/posts';
+    fetch(URLPOST, {
+        method: 'POST',
+        body: JSON.stringify({
+            userId: user.id,
+            title: `${user.nombre}`,
+            body: `${user.historialDeAportes()}`,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(response => response.json())
+        .then((data) =>
+
+        miToastify(`Se agrego el usuario ${data.title} con ID ${data.userId} .`,
+                'linear-gradient(90deg, rgba(26,250,236,1) 0%, rgba(26,250,150,1) 66%)')
+        );
 };

@@ -1,6 +1,5 @@
-function loadLocalStorage(toRun) {
-
-    toRun.then(result => localStorage.setItem('usuarios', JSON.stringify(result)))
+function loadLocalStorage(listaDeUsuarios) {
+    listaDeUsuarios.then(result => localStorage.setItem('usuarios', JSON.stringify(result)))
         .catch(error => console.log(error))
 }
 
@@ -15,6 +14,11 @@ const updateLSTotalRecaudacion = (total) => {
     localStorage.setItem('total', saveTotal);
 };
 
+function updateLocalStorage(usuarios,aportes) {
+    updateLSUsers(usuarios);
+    updateLSTotalRecaudacion(aportes);
+}
+// CARGO LOCAL STORAGE CON EL JSON DE USUARIOS
 loadLocalStorage(convertListLiteralDeUsuariosAListDeUsuariosAsync())
-
 const usersLocalStorage = JSON.parse(localStorage.getItem('usuarios'))
+

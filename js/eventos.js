@@ -43,7 +43,7 @@ function validarInputAportarMonto(elem) {
 };
 
 // Aportar
-function nuevoAporte(elem_id, elem_monto) {
+function nuevoAporte(elem_id, elem_monto,usuarios) {
 
     let btAportar = document.getElementById('bt-aportar');
 
@@ -55,9 +55,9 @@ function nuevoAporte(elem_id, elem_monto) {
             elem_monto.value = 0;
             idUserAportar.value = '';
             let aportes = aportesTotalesDeLaApp(usuarios)
-            renderizarUsuarios(usuarios);
             updateLSUsers(usuarios);
             updateLSTotalRecaudacion(aportes);
+            renderizarUsuarios(usuarios);
             renderiazarTotal(aportes);
             renderAvatar(idUsuarios);
 
@@ -73,7 +73,7 @@ function nuevoAporte(elem_id, elem_monto) {
 
 //Buscar Historial
 
-function buscarHistorial(id_elem) {
+function buscarHistorial(id_elem,usuarios) {
     let nombreUsuario = document.getElementById('usr-hist-name');
     let montoTotal = document.getElementById('usr-monto-total');
     let btBuscarHist = document.getElementById('bt-buscar-hist');
@@ -92,3 +92,27 @@ function buscarHistorial(id_elem) {
         idInputHist.value = '';
     });
 };
+
+function nuevoUsuario(elem_fomr){
+    elem_fomr.addEventListener('submit', nuevoUser);
+}
+
+function nuevoUser(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target))
+
+    const { nombre, apellido, aporte } = data;
+
+    const newUser = new Usuario(maxId + 1, nombre, apellido);
+    newUser.aportar(parseFloat(aporte));
+    usuarios.push(newUser);
+    let aportes = aportesTotalesDeLaApp(usuarios)
+    updateLocalStorage(usuarios,aportes);
+    updateVariablesGlobales(usuarios);
+    refresh(usuarios,aportes,idUsuarios)
+
+    // SIMULO LE POST HACIA UN BACKEND
+    enviarNuevoUser(newUser);
+    document.querySelector('form').reset()
+
+}

@@ -14,7 +14,13 @@ function getUserByID(usuarios, idUsr) {
     return usuarios.find(usr => usr.id == idUsr);
 };
 
+function updateVariablesGlobales(usuarios) {
+    idUsuarios = usuarios.map(usr => usr.id);
+    nombresDeUsuarios = usuarios.map(usr => usr.nombre);
+    apellidosDeUsuarios = usuarios.map(usr => usr.apellido);
+    maxId = Math.max(...idUsuarios);
 
+}
 // Valido los lo que ingreso a los inpus  
 function formatIdValue(id, elem) {
     if (!existeId(idUsuarios, id)) {
@@ -27,3 +33,4 @@ function formatIdValue(id, elem) {
         idUserHistValido = true;
     };
 };
+
