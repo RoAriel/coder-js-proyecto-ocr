@@ -1,16 +1,37 @@
 
-// Uso del Storage
+function loadLocalStorage(toRun) {
 
-let storageUsers = (localStorage.getItem('usuarios')) || JSON.stringify(convertListLiteralDeUsuariosAListDeUsuarios())
+    toRun.then(result => localStorage.setItem('usuarios', JSON.stringify(result)))
+        .catch(error => console.log(error))
+}
+
+loadLocalStorage(convertListLiteralDeUsuariosAListDeUsuariosAsync())
+
+const usersLocalStorage = JSON.parse(localStorage.getItem('usuarios'))
+
+const usuarios = convertListLiteralDeUsuariosAListDeUsuarios(usersLocalStorage)
 
 
+renderizarUsuarios(usuarios)
+
+// Funcion que suma todos los aportes ingresados
 
 
+let storageTotal = (localStorage.getItem('total')) || JSON.stringify(aportesTotalesDeLaApp(usuarios));
+let totalDeAportesApp = parseFloat(storageTotal);
 
 
-//let usersParse = JSON.parse(storageUsers);
+function renderiazarTotal(total) {
+    let recaudacion = document.getElementById('recaudacion');
+    recaudacion.innerText = `$ ${total}`;
+};
 
-/*
+renderiazarTotal(totalDeAportesApp);
+
+const updateLSTotalRecaudacion = (total) => {
+    let saveTotal = JSON.stringify(total);
+    localStorage.setItem('total', saveTotal);
+};
 
 function updateLSUsers(ususuariosAGuardar) {
 
@@ -18,147 +39,20 @@ function updateLSUsers(ususuariosAGuardar) {
     localStorage.setItem('usuarios', save);
 };
 
-const updateLSTotalRecaudacion = (total) => {
-    let saveTotal = JSON.stringify(total);
-    localStorage.setItem('total', saveTotal);
-};
-
-// Funcion que suma todos los aportes ingresados
-function appAportes() {
-    let total = 0
-    usuarios.forEach(usuario => {
-        total += usuario.aportesTotales();
-    });
-    return total;
-};
-
-let usuarios = convertirObjLiteralAUsuario(usersParse);
-let storageTotal = (localStorage.getItem('total')) || JSON.stringify(appAportes());
-let totalDeAportesApp = parseFloat(storageTotal);
-
-
-let recaudacion = document.getElementById('recaudacion');
-const renderiazarTotal = (total) => {
-    recaudacion.innerText = `$ ${total}`;
-};
-
-renderiazarTotal(totalDeAportesApp);
-
 // VARIABLES 
 let idValido = false;
 let idUsuarios = usuarios.map(usr => usr.id);
 let nombresDeUsuarios = usuarios.map(usr => usr.nombre);
 let apellidosDeUsuarios = usuarios.map(usr => usr.apellido);
 
-// FUNCIONES DE RECORRIDO Y USO DE CLASES
-
-function existeUserDeNombre(usrNombre) {
-    return (nombresDeUsuarios.includes(usrNombre));
-};
-
-function existeUserDeApellido(usrApellido) {
-    return (apellidosDeUsuarios.includes(usrApellido));
-};
-
-function existeId(usrID) {
-    return (idUsuarios.includes(usrID));
-};
-
-function getUserByID(idUsr) {
-    return usuarios.find(usr => usr.id == idUsr);
-};
-
-// USO DEL DOM
-
-let table = document.getElementById('tablaBody');
-function renderizarUsuarios(users) {
-    table.innerHTML = '';
-    for (const usr of users) {
-
-        table.innerHTML += `
-        <tr>
-        <td scope="row">${usr.id}</td>
-        <td><img id="${usr.id}" src=""></td>
-        <td>${usr.nombre}</td>
-        <td>${usr.apellido}</td>
-        <td>$ ${usr.montoDelUtimoAporte()}</td>
-        <td>${usr.fechaDelUtimoAporte()}</td>
-
-        </tr>
-        `;
-    };
-};
-
-
+//Render Usuarios
 renderizarUsuarios(usuarios);
-
-// USO DEL GET
-
-async function getAvatarPk(id) {
-    const POKEAPI = `https://pokeapi.co/api/v2/pokemon/${id}/`;
-    const res = await fetch(POKEAPI);
-    const data = await res.json();
-    return data.sprites.front_default;
-     
-};
-const updateAvatar=(idUsers)=>{
-for (const usrId of idUsers) {
-    const imgUserID = document.getElementById(`${usrId}`);
-    getAvatarPk(usrId)
-        .then((data) => {
-            imgUserID.setAttribute('src', data);
-        })
-}}
-
-updateAvatar(idUsuarios);
+renderAvatar(idUsuarios);
 
 // Buscar Usuarios y Mostrar usuarios
+buscarUser(usuarios)
 
-let resultados = document.getElementById('resultadosBody');
-
-function renderizarReusltadosDeBusqueda(users) {
-
-    let setUsers = new Set(users);
-    resultados.innerHTML = '';
-
-    setUsers.forEach(usr => {
-        resultados.innerHTML += `
-        <tr>
-        <td>${usr.id}</td>
-        <td>${usr.nombre}</td>
-        <td>${usr.apellido}</td>
-        </tr>
-        `;
-    })
-};
-
-let btBuscar = document.getElementById('bt-buscar-usr');
-let usrNameBuscado = document.getElementById('name-usr')
-let usrApellidoBuscado = document.getElementById('lastName-usr')
-
-btBuscar.addEventListener('click', () => {
-    if (existeUserDeNombre(usrNameBuscado.value) || existeUserDeApellido(usrApellidoBuscado.value)) {
-        let lista1 = usuarios.filter(usr => usr.nombre === usrNameBuscado.value);
-        let lista2 = usuarios.filter(usr => usr.apellido === usrApellidoBuscado.value);
-        let usuariosEncontrados = lista1.concat(lista2)
-        renderizarReusltadosDeBusqueda(usuariosEncontrados);
-        usrNameBuscado.value = '';
-        usrApellidoBuscado.value = '';
-    } else {
-        resultados.innerHTML = '';
-        usrNameBuscado.value = '';
-        usrApellidoBuscado.value = '';
-        Toastify({
-            text: "⛔ Usuario no encontrado.",
-            className: 'tamanioLetra',
-            style: {
-                background: 'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)'
-            }
-        }).showToast();
-    };
-});
-
-
+/*
 // Validar Input ID Aportar.
 let idUserAportar = 0;
 let idInputAportar = document.getElementById('id-user');
@@ -209,7 +103,7 @@ btAportar.addEventListener('click', () => {
 
         montoIngresado.value = 0;
         idInputAportar.value = '';
-        let aportes = appAportes()
+        let aportes = aportesTotalesDeLaApp()
         renderizarUsuarios(usuarios);
         updateLSUsers(usuarios);
         updateLSTotalRecaudacion(aportes);
@@ -340,7 +234,7 @@ function nuevoUser(e) {
     const newUser = new Usuario(maxId + 1, nombre, apellido);
     newUser.aportar(parseFloat(aporte));
     usuarios.push(newUser);
-    let aportes = appAportes()
+    let aportes = aportesTotalesDeLaApp()
     renderizarUsuarios(usuarios);
     updateLSUsers(usuarios);
     updateLSTotalRecaudacion(aportes);
