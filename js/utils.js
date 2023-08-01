@@ -34,3 +34,10 @@ function formatIdValue(id, elem) {
     };
 };
 
+// Evento reload para esperar al async que cargue los usuarios para mostrar
+window.onload = function () {
+    if (! localStorage.justOnce) {
+        localStorage.setItem("justOnce", "true");
+        window.location.reload();
+    }
+}

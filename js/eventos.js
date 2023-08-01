@@ -24,7 +24,6 @@ function buscarUser(usuarios) {
 
 // Inputs de ID
 function validarInputId(idElem) {
-
     idElem.onkeyup = () => {
         let idInt = parseInt(idElem.value);
         formatIdValue(idInt, idElem);
@@ -60,7 +59,6 @@ function nuevoAporte(elem_id, elem_monto,usuarios) {
             renderizarUsuarios(usuarios);
             renderiazarTotal(aportes);
             renderAvatar(idUsuarios);
-
             miToastify(` ✅ Aporte de ${usuario.nombre} ${usuario.apellido} realizado.`
                 , 'linear-gradient(90deg, rgba(26,250,236,1) 0%, rgba(26,250,150,1) 66%)')
 
@@ -84,7 +82,7 @@ function buscarHistorial(id_elem,usuarios) {
             nombreUsuario.innerText = `${usuario.nombre} ${usuario.apellido}`;
             montoTotal.innerText = `$ ${usuario.aportesTotales()}`
             renderHistorialDeAportes(usuario);
-
+            idValido=false;
         } else {
             miToastify('⛔ ID incorrecto, valide por favor.',
                 'linear-gradient(90deg, rgba(255,145,0,1) 3%, rgba(252,80,14,1) 25%, rgba(250,26,26,1) 100%)');
