@@ -56,7 +56,6 @@ class Usuario {
 
 function convertListLiteralDeUsuariosAListDeUsuarios(users) {
     const usuarios = []
-    console.log(users)
     for (let userLit of users) {
         const usuario = new Usuario(parseInt(userLit.id), userLit.nombre, userLit.apellido);
         usuario.aportes = convertListLiteralDeAportesAListDeAportesDeUnUser(userLit);

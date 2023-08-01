@@ -48,3 +48,23 @@ function renderizarReusltadosDeBusqueda(users) {
             `;
     })
 };
+
+function renderiazarTotal(total) {
+    let recaudacion = document.getElementById('recaudacion');
+    recaudacion.innerText = `$ ${total}`;
+};
+
+function renderHistorialDeAportes(usuario) {
+    let tablaHist = document.getElementById('tablaHistorial');
+    tablaHist.innerHTML = '';
+
+    for (let aporte of usuario.aportes) {
+        tablaHist.innerHTML += `
+        <tr>
+        <td scope="row">${aporte.idUsr}</td>
+        <td>$ ${aporte.monto}</td>
+        <td>${aporte.getFechaFormateada()}</td>
+        </tr>
+        `;
+    };
+};
